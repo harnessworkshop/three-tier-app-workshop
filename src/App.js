@@ -1,23 +1,44 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
+import { useSplitTreatments } from '@splitsoftware/splitio-react';
+import travel_01 from "./travel-01.jpeg";
+import Navbar from "./components/Navbar";
 import './App.css';
 
 function App() {
+  const { treatments: { background_color } } = useSplitTreatments({ names: ['background_color'], updateOnSdkUpdate: true });
+
+  let divStyle = {
+    backgroundColor: background_color.treatment || "gray"
+  }
+  let imageSrc = background_color.treatment === "transparent" ? true : false;
+
+  useEffect(() => {
+    console.log("update");
+    console.log(imageSrc);
+  }, [background_color.treatment])
+
+  if(imageSrc) { 
+    return (
+      <div style={divStyle}>
+        <Navbar/>
+        <div className="hero">
+          <img src={travel_01} alt="Travel" className="hero__image" />
+          <h1 className="hero__title">Devops made simple.</h1>
+        </div>
+      </div>
+    )
+  } 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={divStyle}>
+      <Navbar/>
+      <div className="hero">
+        <div className="hero__qr">
+          <QRCodeSVG value="https://reactjs.org/" />
+        </div>
+        <h1 className="hero__title">Devops made simple.</h1>
+      </div>
     </div>
   );
 }

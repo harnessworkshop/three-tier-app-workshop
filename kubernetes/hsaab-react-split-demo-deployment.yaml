@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hsaab-react-split-demo-deployment
+  namespace: hsaab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hsaab-react-split-demo-deployment
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: hsaab-react-split-demo-deployment
+    spec:
+      containers:
+      - name: hsaab-react-split-demo
+        image: hsaab/react-split-demo:25
+        imagePullPolicy: "Always"
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "2Gi"
+          limits:
+            cpu: "500m"
+            memory: "2Gi"

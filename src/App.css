@@ -14,7 +14,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -34,5 +33,212 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+}
+
+.hero__qr {
+  position: absolute;
+  bottom: 50%;
+  right: 10%;
+  font-size: 4rem;
+  padding: 30px;
+}
+
+.hero__title {
+  position: absolute;
+  bottom: 15%;
+  right: 10%;
+  color: white;
+  font-size: 4rem;
+  padding: 15px;
+}
+
+.navbar {
+  position: sticky;
+  top: 0px;
+  height: 70px;
+  background-color: black;
+  opacity: 0.75;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 30px 0px 30px;
+  margin-bottom: -70px;
+  z-index: 5;
+}
+
+.navbar__logo {
+  height: 50%;
+  width: auto;
+}
+
+/*
+  This is the container for all the navbar links ( <ul> )
+  */
+.navbar__list {
+  display: flex;
+  list-style: none;
+}
+
+/*
+  This is a single item ( <li> ) in the list
+  */
+.navbar__item {
+  white-space: nowrap;
+}
+
+/*
+  The anchor tag ( <a> ) for the navbar links
+  */
+.navbar__link {
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 10px;
+  margin: 0px 5px;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-color: transparent;
+  transition: 250ms;
+}
+
+.navbar__link:hover {
+  border-color: white;
+  transition: 250ms;
+}
+
+.navbar__menu {
+  color: white;
+  display: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+  .navbar__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    top: 70px;
+    left: -100%;
+    width: 100%;
+    height: 300px;
+    position: absolute;
+    transition: all 0.5s ease;
+  }
+
+  .navbar__list--active {
+    left: 0;
+  }
+
+  .navbar__menu {
+    display: block;
+  }
+
+  .navbar__item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+    flex: 1;
+  }
+
+  .navbar__link {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    border-width: 0px;
+    background-color: black;
+    opacity: 0.75;
+  }
+
+  .navbar__link:hover {
+    border-width: 0px;
+    opacity: 0.9;
+  }
+}
+
+.button {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  max-width: 10em;
+  border-radius: 50px;
+  padding: 1em 2em;
+  margin: 2em;
+  border: 0;
+  font-family: 'Raleway', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  cursor:pointer;
+}
+
+.button--blue {
+  color: #fff;
+  background-image: linear-gradient(-135deg, #2D76D1 0%, #3994CE 52%, #2EA4A8 100%);
+}
+
+.button--diagonal {
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.44);
+    transform: translateX(100%);
+    box-sizing: content-box; 
+    transition: 0.7s ease-in-out;
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+  }
+  
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    background-color: rgba(0,0,0,0.44);
+    transform: translateX(-100%);
+    transition: 0.7s ease-in-out;
+    clip-path: polygon(0 100%, 0 0, 100% 100%);
+  }
+
+  &:hover {
+    .button__text {
+      transform: scale(1.09);
+    }
+    
+    &:before,
+    &:after {
+      transform: translateX(0);
+    }
   }
 }

@@ -3,11 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { SplitFactoryProvider } from '@splitsoftware/splitio-react';
+import sdkConfig from './splitio-config';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+      <SplitFactoryProvider config={sdkConfig} updateOnSdkTimedout={true} >
+        {({ factory, isReady, isTimedout, lastUpdate }) => {
+          // Uncomment the following line if you want to render a different component until the SDK is ready
+          // if (!isReady) return (<div>Loading SDK ...</div>);
+          return <App />
+        }}
+      </SplitFactoryProvider>
   </React.StrictMode>
 );
 
