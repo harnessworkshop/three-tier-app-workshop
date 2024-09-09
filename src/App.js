@@ -24,6 +24,9 @@ function App() {
         <Navbar/>
         <div className="hero">
           <img src={travel_01} alt="Travel" className="hero__image" />
+          <div className="hero__qr">
+            <QRCodeSVG value={window.location.href} />
+          </div>
           <h1 className="hero__title">Devops made simple.</h1>
         </div>
       </div>
@@ -35,7 +38,7 @@ function App() {
       <Navbar/>
       <div className="hero">
         <div className="hero__qr">
-          <QRCodeSVG value="https://reactjs.org/" />
+          <QRCodeSVG value={window.location.href} />
         </div>
         <h1 className="hero__title">Devops made simple.</h1>
       </div>
