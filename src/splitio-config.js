@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 // Replace authorizationKey with your client-side SDK key.
 const config = {
     core: {
-      authorizationKey: process.env.REACT_APP_SPLIT_SDK_KEY,
+      authorizationKey: window._env_.REACT_APP_SPLIT_SDK_KEY,
       key: uuidv4(),
     }
   };

@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hsaab-react-split-demo-deployment
-  namespace: hsaab
+  name: {{.Values.namespace}}-react-split-demo-deployment
+  namespace: {{.Values.namespace}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hsaab-react-split-demo-deployment
+      app: {{.Values.namespace}}-react-split-demo-deployment
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -16,10 +16,10 @@ spec:
   template:
     metadata:
       labels:
-        app: hsaab-react-split-demo-deployment
+        app: {{.Values.namespace}}-react-split-demo-deployment
     spec:
       containers:
-      - name: hsaab-react-split-demo
+      - name: {{.Values.namespace}}-react-split-demo
         image: hsaab/react-split-demo:32
         imagePullPolicy: "Always"
         resources:
@@ -33,5 +33,5 @@ spec:
         - name: REACT_APP_SPLIT_SDK_KEY
           valueFrom:
             secretKeyRef:
-              name: split-sdk-key
+              name: split_sdk_key
               key: key  
