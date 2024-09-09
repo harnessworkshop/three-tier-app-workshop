@@ -1,0 +1,61 @@
+
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: react-split-demo
+  title: Deploy a react split demo to k8s
+  description: A template to deploy a new demo app
+  tags:
+    - react
+    - javascript
+    - split
+spec:
+  owner: hassan.saab@harness.io
+  type: service
+  parameters:
+    - title: Service Details
+      required:
+        - project_name
+        - organization_name
+        - public_template_url
+        - repository_type
+        - repository_description
+        - repository_default_branch
+        - direct_push_branch
+      properties:
+        split_sdk_key:
+          title: Split Client-side SDK key
+          type: string
+          description: split client-side sdk key for your environment in the "simple-demo" workspace    
+        namespace:
+          title: Namespace
+          type: string
+          description: namespace we will deploy to within the k8 cluster. Should be first initial + last name like "hsaab"
+        owner:
+          title: Choose an Owner for the Service
+          type: string
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+        # This field is hidden but needed to authenticate the request to trigger the pipeline
+        token:
+          title: Harness Token
+          type: string
+          ui:widget: password
+          ui:field: HarnessAuthToken
+  steps:
+    - id: trigger
+      name: Bootstrapping your new service
+      action: trigger:harness-custom-pipeline
+      input:
+        url: https://app.harness.io/ng/account/6_vVHzo9Qeu9fXvj-AcbCQ/module/cd/orgs/SE_Sandbox/projects/devX_super_team/pipelines/react_split_demo_idp/pipeline-studio?storeType=INLINE
+        inputset:
+          namespace: ${{ parameters.namespace }}
+          split_sdk_key: ${{ parameters.split_sdk_key }}
+        apikey: ${{ parameters.token }}
+
+  output:
+    links:
+      - title: Pipeline Details
+        url: ${{ steps.trigger.output.PipelineUrl }}
