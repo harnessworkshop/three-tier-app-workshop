@@ -15,13 +15,8 @@ spec:
   parameters:
     - title: Service Details
       required:
-        - project_name
-        - organization_name
-        - public_template_url
-        - repository_type
-        - repository_description
-        - repository_default_branch
-        - direct_push_branch
+        - split_sdk_key
+        - namespace
       properties:
         split_sdk_key:
           title: Split Client-side SDK key
