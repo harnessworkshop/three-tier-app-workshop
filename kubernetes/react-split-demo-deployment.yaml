@@ -33,5 +33,5 @@ spec:
         - name: REACT_APP_SPLIT_SDK_KEY
           valueFrom:
             secretKeyRef:
-              name: split_sdk_key
+              name: split-sdk-key
               key: key  
