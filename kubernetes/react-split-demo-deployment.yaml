@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: {{.Values.namespace}}-react-split-demo
-        image: hsaab/react-split-demo:32
+        image: hsaab/react-split-demo:33
         imagePullPolicy: "Always"
         resources:
           requests:
@@ -35,3 +35,5 @@ spec:
             secretKeyRef:
               name: split-sdk-key
               key: key  
+        - name: REACT_APP_SITE_URL
+          value: 
