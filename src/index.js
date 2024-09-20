@@ -9,11 +9,12 @@ import sdkConfig from './splitio-config';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <SplitFactoryProvider config={sdkConfig} updateOnSdkTimedout={true} >
+      <SplitFactoryProvider config={sdkConfig} updateOnSdkUpdate={true} updateOnSdkTimedout={true} >
         {({ factory, isReady, isTimedout, lastUpdate }) => {
           // Uncomment the following line if you want to render a different component until the SDK is ready
-          // if (!isReady) return (<div>Loading SDK ...</div>);
-          return <App />
+          if (!isReady) return (<div>Loading SDK ...</div>);
+          
+          return <App/>;
         }}
       </SplitFactoryProvider>
   </React.StrictMode>

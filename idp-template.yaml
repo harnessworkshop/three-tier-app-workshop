@@ -15,13 +15,18 @@ spec:
   parameters:
     - title: Service Details
       required:
-        - split_sdk_key
+        - split_client_sdk_key
+        - split_server_sdk_key
         - namespace
       properties:
-        split_sdk_key:
+        split_client_sdk_key:
           title: Split Client-side SDK key
           type: string
           description: split client-side sdk key for your environment in the "simple-demo" workspace    
+        split_server_sdk_key:
+          title: Split Server-side SDK key
+          type: string
+          description: split serverside-side sdk key for your environment in the "simple-demo" workspace    
         namespace:
           title: Namespace
           type: string
@@ -47,7 +52,8 @@ spec:
         url: https://app.harness.io/ng/account/6_vVHzo9Qeu9fXvj-AcbCQ/module/cd/orgs/SE_Sandbox/projects/devX_super_team/pipelines/react_split_demo_idp/pipeline-studio?storeType=INLINE
         inputset:
           namespace: ${{ parameters.namespace }}
-          split_sdk_key: ${{ parameters.split_sdk_key }}
+          split_client_sdk_key: ${{ parameters.split_client_sdk_key }}
+          split_server_sdk_key: ${{ parameters.split_server_sdk_key }}
         apikey: ${{ parameters.token }}
 
   output:

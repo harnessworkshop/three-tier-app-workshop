@@ -5,6 +5,7 @@ const config = {
     core: {
       authorizationKey: window._env_.REACT_APP_SPLIT_SDK_KEY,
       key: uuidv4(),
+      debug: true,
     }
   };
   
