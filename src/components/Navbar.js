@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useTrack } from '@splitsoftware/splitio-react';
+import React from "react";
 import Button from './Button.js';
 import harnessLogo from '../harness-logo-white.png';
 import '../App.css'
