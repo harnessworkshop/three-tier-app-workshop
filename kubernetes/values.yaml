@@ -1,2 +1,1 @@
 namespace: <+pipeline.variables.namespace>
-split_client_sdk_key: <+pipeline.variables.split_client_sdk_key>
