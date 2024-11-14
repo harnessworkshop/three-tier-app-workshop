@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: {{.Values.namespace}}-react-demo-app
-        image: hsaab/react-split-demo:33
+        image: hsaab/react-demo-app:1
         imagePullPolicy: "Always"
         resources:
           requests:
