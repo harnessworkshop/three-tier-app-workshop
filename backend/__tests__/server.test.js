@@ -1,7 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const { Pool } = require('pg');
-const app = require('../server'); // Make sure to export app from server.js
+const { app, startServer } = require('../server');
 
 // Mock the pg Pool
 jest.mock('pg', () => {
@@ -13,8 +13,21 @@ jest.mock('pg', () => {
 });
 
 const pool = new Pool();
+let server;
 
 describe('Backend API Tests', () => {
+  beforeAll(() => {
+    server = startServer();
+  });
+
+  afterAll(done => {
+    if (server) {
+      server.close(done);
+    } else {
+      done();
+    }
+  });
+
   beforeEach(() => {
     // Clear all mocks before each test
     jest.clearAllMocks();
@@ -24,8 +37,8 @@ describe('Backend API Tests', () => {
   test('GET /api/data returns data when records exist', async () => {
     const mockData = {
       rows: [
-        { id: 1, key: 1, value: 100, created_at: new Date() },
-        { id: 2, key: 2, value: 200, created_at: new Date() }
+        { id: 1, key: 1, value: 100, created_at: "2025-02-03T23:26:45.709Z" },
+        { id: 2, key: 2, value: 200, created_at: "2025-02-03T23:26:45.709Z" }
       ]
     };
     pool.query.mockResolvedValueOnce(mockData);
@@ -109,9 +122,10 @@ describe('Backend API Tests', () => {
   // Test 8: Verify CORS headers
   test('API endpoints should have CORS headers', async () => {
     const response = await request(app)
-      .get('/api/data');
+      .get('/api/data')
+      .set('Origin', 'http://localhost:3000');
 
-    expect(response.headers['access-control-allow-origin']).toBeDefined();
+    expect(response.headers['access-control-allow-origin']).toBe('http://localhost:3000');
     expect(response.headers['access-control-allow-credentials']).toBe('true');
   });
 

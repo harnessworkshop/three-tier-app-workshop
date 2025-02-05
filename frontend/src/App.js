@@ -12,14 +12,14 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fillDB = await fetch('/api/init-db', {
+        const fillDB = await fetch(`${process.env.REACT_APP_API_URL}/api/init-db`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           credentials: 'include'
         });
-        const response = await fetch('/api/data', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/data`, {
           credentials: 'include'
         });
         if (!response.ok || !fillDB.ok) {

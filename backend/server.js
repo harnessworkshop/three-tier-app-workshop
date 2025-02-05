@@ -30,8 +30,16 @@ app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:5000'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['access-control-allow-origin', 'access-control-allow-credentials']
 }));
+
+// Add a middleware to ensure CORS headers are always set
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || 'http://localhost:3000');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
 
 // Parse JSON bodies
 app.use(express.json());
@@ -68,8 +76,8 @@ app.post('/api/init-db', async (req, res) => {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS data (
                 id SERIAL PRIMARY KEY,
-                key INTEGER NOT NULL,
-                value INTEGER NOT NULL,
+                key INTEGER NOT NULL UNIQUE,
+                value INTEGER NOT NULL UNIQUE,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
@@ -112,9 +120,20 @@ app.post('/api/clear-db', async (req, res) => {
     }
 });
 
-const PORT = 5000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// Move server creation to a separate function
+const PORT = process.env.PORT || 5000;
+let server;
 
-module.exports = app; 
+const startServer = () => {
+    server = app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+    return server;
+};
+
+// Only start the server if we're not in test mode
+if (process.env.NODE_ENV !== 'test') {
+    startServer();
+}
+
+module.exports = { app, startServer }; 
