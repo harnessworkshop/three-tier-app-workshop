@@ -1,6 +1,6 @@
 variable "aws_region" {
   description = "AWS region"
-  default     = "us-east-2"
+  default     = "us-east-1"
 }
 
 variable "environment" {
@@ -42,14 +42,4 @@ variable "db_username" {
 variable "db_password" {
   description = "Database master password"
   sensitive   = true
-}
-
-variable "vpc_id" {
-  description = "ID of the existing VPC"
-  type        = string
-}
-
-variable "subnet_ids" {
-  description = "List of subnet IDs from the existing VPC"
-  type        = list(string)
 } 

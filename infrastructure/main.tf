@@ -1,6 +1,8 @@
 provider "aws" {
-  region = "us-east-2"
-  shared_credentials_files = ["/Users/hsaab/.aws/credentials"]
+  region = "us-east-1"
+  shared_config_files      = ["~/.aws/config"]
+  shared_credentials_files = ["~/.aws/credentials"]
+  profile                 = "default"
 }
 
 # Configure terraform backend
@@ -13,15 +15,23 @@ terraform {
   }
 }
 
-# Create EKS cluster
-# module "eks" {
-#   source = "./modules/eks"
+# Create VPC
+module "vpc" {
+  source = "./modules/vpc"
+  
+  cluster_name = var.cluster_name
+  azs         = ["${var.aws_region}a", "${var.aws_region}b"]
+}
 
-#   cluster_name    = var.cluster_name
-#   vpc_id         = var.vpc_id
-#   subnet_ids     = var.subnet_ids
-#   environment    = var.environment
-# }
+# Create EKS cluster
+module "eks" {
+  source = "./modules/eks"
+
+  cluster_name = var.cluster_name
+  vpc_id      = module.vpc.vpc_id
+  subnet_ids  = module.vpc.private_subnet_ids
+  environment = var.environment
+}
 
 # Create RDS instance
 module "rds" {
@@ -36,7 +46,7 @@ module "rds" {
   db_name             = var.db_name
   username            = var.db_username
   password            = var.db_password
-  vpc_id              = var.vpc_id
-  subnet_ids          = var.subnet_ids
+  vpc_id              = module.vpc.vpc_id
+  subnet_ids          = module.vpc.public_subnet_ids
   environment         = var.environment
 } 

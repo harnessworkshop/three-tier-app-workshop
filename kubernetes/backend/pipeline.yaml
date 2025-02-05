@@ -1,0 +1,184 @@
+pipeline:
+  identifier: three_tier_app
+  name: three tier app
+  orgIdentifier: training
+  projectIdentifier: Viper
+  properties:
+    ci: {}
+  stages:
+    - parallel:
+        - stage:
+            identifier: build
+            name: backend build
+            description: ""
+            type: CI
+            spec:
+              cloneCodebase: true
+              infrastructure:
+                type: KubernetesDirect
+                spec:
+                  connectorRef: account.k8scluster
+                  namespace: hsaab
+              execution:
+                steps:
+                  - step:
+                      type: Run
+                      name: unit tests
+                      identifier: unit_tests
+                      spec:
+                        shell: Bash
+                        command: cd backend && npm test
+                  - step:
+                      type: Semgrep
+                      name: security scan
+                      identifier: security_scan
+                      spec:
+                        mode: orchestration
+                        config: default
+                        target:
+                          type: repository
+                          workspace: /harness/backend
+                          detection: auto
+                        advanced:
+                          log:
+                            level: info
+                  - step:
+                      type: BuildAndPushDockerRegistry
+                      name: build and push to docker
+                      identifier: build_and_push_to_docker
+                      spec:
+                        connectorRef: hsaab_docker
+                        repo: hsaab/three-tier-app-backend
+                        tags:
+                          - "1"
+                        caching: true
+        - stage:
+            name: frontend build
+            identifier: frontend_build
+            description: ""
+            type: CI
+            spec:
+              cloneCodebase: true
+              caching:
+                enabled: true
+              buildIntelligence:
+                enabled: true
+              platform:
+                os: Linux
+                arch: Amd64
+              runtime:
+                type: Cloud
+                spec: {}
+              execution:
+                steps:
+                  - step:
+                      type: Run
+                      name: unit test
+                      identifier: unit_test
+                      spec:
+                        shell: Bash
+                        command: cd frontend && npm test
+                  - step:
+                      type: Semgrep
+                      name: security scan
+                      identifier: security_scan
+                      spec:
+                        mode: orchestration
+                        config: default
+                        target:
+                          type: repository
+                          workspace: /harness/frontend
+                          detection: auto
+                        advanced:
+                          log:
+                            level: info
+                  - step:
+                      type: BuildAndPushDockerRegistry
+                      name: build and push to docker
+                      identifier: build_and_push_to_docker
+                      spec:
+                        connectorRef: hsaab_docker
+                        repo: hsaab/three-tier-app-frontend
+                        tags:
+                          - "1"
+                        caching: true
+    - stage:
+        name: Approval
+        identifier: Approval
+        description: ""
+        type: Approval
+        spec:
+          execution:
+            steps:
+              - step:
+                  name: Approval
+                  identifier: Approval
+                  type: HarnessApproval
+                  timeout: 1d
+                  spec:
+                    approvalMessage: |-
+                      Please review the following information
+                      and approve the pipeline progression
+                    includePipelineExecutionHistory: true
+                    approvers:
+                      minimumCount: 1
+                      disallowPipelineExecutor: false
+                      userGroups:
+                        - _project_all_users
+                    isAutoRejectEnabled: false
+                    approverInputs: []
+        tags: {}
+    - stage:
+        name: provision infrastructure
+        identifier: provision_infrastructure
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: TerraformPlan
+                  name: plan
+                  identifier: plan
+                  spec:
+                    provisionerIdentifier: vpc_eks_rds_plan_<+pipeline.sequenceId>
+                    configuration:
+                      command: Apply
+                      configFiles:
+                        store:
+                          spec:
+                            connectorRef: account.workshopgithub
+                            repoName: three-tier-app-workshop
+                            gitFetchType: Branch
+                            branch: main
+                            folderPath: infrastructure
+                          type: Github
+                      providerCredential:
+                        type: Aws
+                        spec:
+                          connectorRef: hsaab_aws
+                          region: us-east-1
+                          roleArn: ""
+                      secretManagerRef: harnessSecretManager
+                      skipRefreshCommand: false
+                  timeout: 10m
+              - step:
+                  type: TerraformApply
+                  name: apply
+                  identifier: apply
+                  spec:
+                    provisionerIdentifier: vpc_eks_rds_plan_<+pipeline.sequenceId>
+                    configuration:
+                      type: Inline
+                      spec:
+                        configFiles:
+                          store:
+                            spec:
+                              connectorRef: account.workshopgithub
+                              repoName: three-tier-app-workshop
+                              gitFetchType: Branch
+                              branch: main
+                              folderPath: infrastructure
+                            type: Github
+                  timeout: 10m
+        tags: {}
