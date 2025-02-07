@@ -4,11 +4,10 @@ metadata:
   name: hsaab-react-demo-app-svc
   namespace: hsaab
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
-    - port: 80
-      targetPort: 80
-      protocol: TCP
+    - protocol: TCP
+      port: 80
+      nodePort: 32321
   selector:
     app: hsaab-react-demo-app-deployment
-

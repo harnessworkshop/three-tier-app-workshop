@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: three-tier-backend-deployment
+  name: three-tier-frontend-deployment
   namespace: hsaab
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: three-tier-backend-deployment
+      app: three-tier-frontend-deployment
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -16,10 +16,10 @@ spec:
   template:
     metadata:
       labels:
-        app: three-tier-backend-deployment
+        app: three-tier-frontend-deployment
     spec:
       containers:
-      - name: three-tier-backend
+      - name: three-tier-frontend
         image: hsaab/three-tier-app-frontend:1
         ports:
         - containerPort: 3000
