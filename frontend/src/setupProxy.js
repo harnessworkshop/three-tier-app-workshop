@@ -5,13 +5,10 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://localhost:5000',
+      target: process.env.REACT_APP_API_URL || 'http://localhost:5000',
       changeOrigin: true,
       pathRewrite: {
         '^/api': '/api'
-      },
-      onProxyReq: (proxyReq, req, res) => {
-        console.log('Proxying request to:', proxyReq.path);
       }
     })
   );

@@ -22,7 +22,7 @@ spec:
       - name: three-tier-frontend
         image: hsaab/three-tier-app-frontend:1
         ports:
-        - containerPort: 3000
+        - containerPort: 80
         imagePullPolicy: "Always"
         resources:
           requests:

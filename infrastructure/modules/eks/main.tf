@@ -16,12 +16,35 @@ module "eks" {
     node_pools = ["general-purpose"]
   }
 
+  # Disable CloudWatch logging
+  cluster_enabled_log_types = []
+
   vpc_id     = var.vpc_id #hsaab-vpc
   subnet_ids = var.subnet_ids #hsaab-subnet-2a-public, hsaab-subnet-2b-private
 
   tags = {
     Environment = "dev"
     Terraform   = "true"
+  }
+
+  # Add security group rules for NodePorts
+  node_security_group_additional_rules = {
+    ingress_nodeport_32321 = {
+      description = "NodePort 32321"
+      protocol    = "tcp"
+      from_port   = 32321
+      to_port     = 32321
+      type        = "ingress"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+    ingress_nodeport_32322 = {
+      description = "NodePort 32322"
+      protocol    = "tcp"
+      from_port   = 32322
+      to_port     = 32322
+      type        = "ingress"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
 
   depends_on = [
