@@ -1,6 +1,7 @@
 {
-  "name": "full-stack-app",
+  "name": "{{cookiecutter.app_slug}}",
   "version": "1.0.0",
+  "author": "{{cookiecutter.author}}",
   "scripts": {
     "frontend": "cd frontend && npm start",
     "backend": "cd backend && npm run dev",
