@@ -11,9 +11,20 @@ module "eks" {
   # Optional: Adds the current caller identity as an administrator via cluster access entry
   enable_cluster_creator_admin_permissions = true
 
-  cluster_compute_config = {
-    enabled    = true
-    node_pools = ["general-purpose"]
+  # Configure managed node groups
+  eks_managed_node_groups = {
+    general = {
+      name = "general-node-group"
+      
+      instance_types = ["t3.medium"]
+      min_size     = 1
+      max_size     = 2
+      desired_size = 1
+      
+      labels = {
+        role = "general"
+      }
+    }
   }
 
   # Disable CloudWatch logging
