@@ -1,0 +1,9 @@
+{
+    "app_name": "Three tier app",
+    "app_slug": "full-stack-app",
+    "author": "Your Name",
+    "email": "you@example.com",
+    "description": "A short description of the app.",
+    "project_name": "Full Stack Demo App",
+    "project_short_description": "A full stack demo application with React frontend and Node.js backend"
+}
