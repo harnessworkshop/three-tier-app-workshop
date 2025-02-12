@@ -1,0 +1,13 @@
+{
+  "app_slug": "full-stack-app",
+  "author": "Your Name",
+  "project_name": "Full Stack Demo App",
+  "project_short_description": "A full stack demo application with React frontend and Node.js backend",
+  "_copy_without_render": [
+    "*.html",
+    "*.js",
+    "*.jsx",
+    "*.ts",
+    "*.tsx"
+  ]
+} 
