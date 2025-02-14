@@ -1,8 +1,7 @@
 provider "aws" {
   region = "us-east-1"
-  shared_config_files      = ["~/.aws/config"]
-  shared_credentials_files = ["~/.aws/credentials"]
-  profile                 = "default"
+  aws_access_key = var.aws_access_key
+  aws_secret_key = var.aws_secret_key
 }
 
 # Configure terraform backend
