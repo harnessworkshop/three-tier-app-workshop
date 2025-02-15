@@ -27,8 +27,8 @@ module "eks" {
   source = "./modules/eks"
 
   cluster_name = var.cluster_name
-  vpc_id       = module.vpc.vpc_id
-  subnet_ids   = module.vpc.public_subnet_ids
+  vpc_id       = var.vpc_id
+  subnet_ids   = var.public_subnet_ids
   environment  = var.environment
 }
 
@@ -45,7 +45,7 @@ module "rds" {
   db_name             = var.db_name
   username            = var.db_username
   password            = var.db_password
-  vpc_id              = module.vpc.vpc_id
-  subnet_ids          = module.vpc.public_subnet_ids
+  vpc_id              = var.vpc_id
+  subnet_ids          = var.public_subnet_ids
   environment         = var.environment
 } 

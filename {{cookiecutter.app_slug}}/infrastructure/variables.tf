@@ -31,6 +31,17 @@ variable "availability_zones" {
   default     = ["us-east-1a", "us-east-1b"]
 }
 
+variable "vpc_id" {
+  description = "VPC ID"
+  default     = "vpc-0f9710017e7c769e6" # hsaab-vpc
+}
+
+variable "public_subnet_ids" {
+  description = "Public Subnet IDs"
+  type        = list(string)
+  default     = ["subnet-051ebd2b574ef4d57", "subnet-0e6a9895450c14535"] # hsaab-vpc public subnets
+}
+
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   default     = "hsaab-eks-cluster"
