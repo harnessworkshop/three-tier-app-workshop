@@ -1,7 +1,7 @@
 provider "aws" {
   region = "us-east-1"
-  access_key = "${var.aws_access_key}"
-  secret_key = "${var.aws_secret_key}"
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
 }
 
 # Configure terraform backend
@@ -14,13 +14,13 @@ terraform {
   }
 }
 
-# Create VPC
-module "vpc" {
-  source = "./modules/vpc"
+# Create VPC - commented out for now as we've already created the VPC.
+# module "vpc" {
+#   source = "./modules/vpc"
   
-  cluster_name = var.cluster_name
-  azs         = ["${var.aws_region}a", "${var.aws_region}b"]
-}
+#   cluster_name = var.cluster_name
+#   azs         = ["${var.aws_region}a", "${var.aws_region}b"]
+# }
 
 # Create EKS cluster
 module "eks" {

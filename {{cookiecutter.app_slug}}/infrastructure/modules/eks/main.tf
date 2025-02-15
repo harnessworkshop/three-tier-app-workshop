@@ -30,8 +30,8 @@ module "eks" {
   # Disable CloudWatch logging
   cluster_enabled_log_types = []
 
-  vpc_id     = var.vpc_id #hsaab-vpc
-  subnet_ids = var.subnet_ids #hsaab-subnet-2a-public, hsaab-subnet-2b-private
+  vpc_id     = var.vpc_id
+  subnet_ids = var.subnet_ids 
 
   tags = {
     Environment = "dev"
