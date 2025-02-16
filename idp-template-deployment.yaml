@@ -1,7 +1,7 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: Three Tier Web App Blueprint
+  name: Three_Tier_Web_App_Blueprint
   title: Three Tier Web App Blueprint
   description: A blueprint that deploys a frontend, backend, and database to a kubernetes cluster in eks
   tags:
