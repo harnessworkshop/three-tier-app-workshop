@@ -41,12 +41,12 @@ provider "helm" {
 }
 
 # Create VPC
-module "vpc" {
-  source = "./modules/vpc"
+# module "vpc" {
+#   source = "./modules/vpc"
   
-  cluster_name = var.cluster_name
-  azs         = ["${var.aws_region}a", "${var.aws_region}b"]
-}
+#   cluster_name = var.cluster_name
+#   azs         = ["${var.aws_region}a", "${var.aws_region}b"]
+# }
 
 # Create EKS cluster
 module "eks" {
