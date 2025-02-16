@@ -30,10 +30,10 @@ resource "aws_security_group" "rds" {
 resource "aws_db_instance" "main" {
   identifier           = var.identifier
   allocated_storage    = var.allocated_storage
-  storage_type        = var.storage_type
-  engine              = var.engine
-  engine_version      = var.engine_version
-  instance_class      = var.instance_class
+  storage_type        = "gp2"
+  engine              = "postgres"
+  engine_version      = "14"
+  instance_class      = "db.t3.micro"
   db_name             = var.db_name
   username            = var.username
   password            = var.password
@@ -50,9 +50,4 @@ resource "aws_db_instance" "main" {
   tags = {
     Environment = var.environment
   }
-}
-
-# Add data source for VPC
-data "aws_vpc" "selected" {
-  id = var.vpc_id
 } 

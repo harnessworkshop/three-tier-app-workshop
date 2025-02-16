@@ -1,27 +1,32 @@
+# AWS Configuration
 variable "aws_region" {
   description = "AWS region"
+  type        = string
   default     = "us-east-1"
 }
 
 variable "aws_access_key" {
-  type = string
-  description = "aws access key"
+  description = "AWS access key"
+  type        = string
   sensitive   = true
 }
 
 variable "aws_secret_key" {
-  type = string
-  description = "aws secret key"
+  description = "AWS secret key"
+  type        = string
   sensitive   = true
 }
 
+# Environment & Network
 variable "environment" {
   description = "Environment name"
+  type        = string
   default     = "development"
 }
 
 variable "vpc_cidr" {
   description = "CIDR block for VPC"
+  type        = string
   default     = "10.0.0.0/16"
 }
 
@@ -31,38 +36,48 @@ variable "availability_zones" {
   default     = ["us-east-1a", "us-east-1b"]
 }
 
-variable "vpc_id" {
-  description = "VPC ID"
-  default     = "vpc-0f9710017e7c769e6" # hsaab-vpc
-}
-
-variable "public_subnet_ids" {
-  description = "Public Subnet IDs"
-  type        = list(string)
-  default     = ["subnet-051ebd2b574ef4d57", "subnet-0e6a9895450c14535"] # hsaab-vpc public subnets
-}
-
+# EKS Configuration
 variable "cluster_name" {
   description = "Name of the EKS cluster"
-  default     = "hsaab-eks-cluster"
+  type        = string
+  default     = "hsaabekscluster"
 }
 
-variable "db_identifier" {
-  description = "Identifier for the RDS instance"
-  default     = "hsaabpostgresdb"
+# Harness Delegate Configuration
+variable "harness_account_id" {
+  description = "Harness Platform Account ID"
+  type        = string
+  sensitive   = true
 }
 
+variable "harness_delegate_token" {
+  description = "Harness Platform Delegate Token (raw token from Harness UI)"
+  type        = string
+  sensitive   = true
+}
+
+# RDS Configuration
 variable "db_name" {
-  description = "Name of the database"
+  description = "Name of the database and RDS identifier"
+  type        = string
   default     = "hsaabpostgresdb"
 }
 
 variable "db_username" {
   description = "Database master username"
+  type        = string
   sensitive   = true
 }
 
 variable "db_password" {
   description = "Database master password"
+  type        = string
   sensitive   = true
-} 
+}
+
+# Harness Configuration
+variable "harness_platform_api_key" {
+  description = "Harness Platform API Key"
+  type        = string
+  sensitive   = true
+}

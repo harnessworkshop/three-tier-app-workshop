@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{.Values.namespace}}-react-demo-app-deployment
-  namespace: {{.Values.namespace}}
+  name: three-tier-frontend-deployment
+  namespace: hsaab
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{.Values.namespace}}-react-demo-app-deployment
+      app: three-tier-frontend-deployment
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -16,16 +16,18 @@ spec:
   template:
     metadata:
       labels:
-        app: {{.Values.namespace}}-react-demo-app-deployment
+        app: three-tier-frontend-deployment
     spec:
       containers:
-      - name: {{.Values.namespace}}-react-demo-app
-        image: hsaab/react-demo-app:1
+      - name: three-tier-frontend
+        image: hsaab/three-tier-app-frontend:1
+        ports:
+        - containerPort: 80
         imagePullPolicy: "Always"
         resources:
           requests:
-            cpu: "500m"
-            memory: "2Gi"
+            cpu: "200m"
+            memory: "256Mi"
           limits:
             cpu: "500m"
-            memory: "2Gi"
+            memory: "512Mi"

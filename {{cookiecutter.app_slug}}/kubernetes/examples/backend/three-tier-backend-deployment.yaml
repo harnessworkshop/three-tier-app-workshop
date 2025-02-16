@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{.Values.namespace}}-three-tier-frontend-deployment
-  namespace: {{.Values.namespace}}
+  name: three-tier-backend-deployment
+  namespace: hsaab
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{.Values.namespace}}-three-tier-frontend-deployment
+      app: three-tier-backend-deployment
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -16,13 +16,18 @@ spec:
   template:
     metadata:
       labels:
-        app: {{.Values.namespace}}-three-tier-frontend-deployment
+        app: three-tier-backend-deployment
     spec:
       containers:
-      - name: {{.Values.namespace}}-three-tier-frontend
-        image: hsaab/three-tier-app-frontend:{{.Values.namespace}}:{{.Values.executionId}}
+      - name: three-tier-backend
+        image: hsaab/three-tier-app-backend:1
         ports:
-        - containerPort: 80
+        - containerPort: 5000
+        env:
+        - name: PORT
+          value: "5000"
+        - name: NODE_ENV
+          value: "production"
         imagePullPolicy: "Always"
         resources:
           requests:
