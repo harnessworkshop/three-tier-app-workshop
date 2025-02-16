@@ -28,12 +28,6 @@ variable "delegate_name" {
   type        = string
 }
 
-variable "namespace" {
-  description = "Kubernetes namespace for the delegate"
-  type        = string
-  default     = "harness-delegate-ng"
-}
-
 variable "manager_endpoint" {
   description = "Harness Manager URL"
   type        = string
@@ -42,4 +36,20 @@ variable "manager_endpoint" {
 variable "delegate_image" {
   description = "Harness Delegate Docker image"
   type        = string
+}
+
+variable "github_repo_name" {
+  description = "Name of the GitHub repository"
+  type        = string
+}
+
+variable "harness_project_name" {
+  description = "Name of the Harness project"
+  type        = string
+}
+
+variable "namespace" {
+  description = "Kubernetes namespace for the application"
+  type        = string
+  default     = "hsaab"
 }

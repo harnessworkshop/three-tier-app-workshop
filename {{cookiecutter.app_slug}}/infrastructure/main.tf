@@ -71,6 +71,11 @@ module "harness" {
   delegate_name    = "${var.cluster_name}delegate"
   manager_endpoint = "https://app.harness.io/gratis"
   delegate_image   = "harness/delegate:25.01.85000"
+
+  # Add new variables
+  github_repo_name     = var.github_repo_name
+  harness_project_name = var.harness_project_name
+  namespace            = var.namespace
 }
 
 # Create RDS instance

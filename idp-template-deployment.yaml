@@ -1,0 +1,96 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: Three Tier Web App Blueprint
+  title: Three Tier Web App Blueprint
+  description: A blueprint that deploys a frontend, backend, and database to a kubernetes cluster in eks
+  tags:
+    - react
+    - javascript
+    - eks
+    - kubernetes
+    - rds
+    - database
+spec:
+  owner: hassan.saab@harness.io
+  type: service
+  parameters:
+    - title: Service Details
+      required:
+        - namespace
+        - github_repo_name
+        - github_repo_description
+        - github_repo_owner
+        - harness_project_name
+        - eks_cluster_name
+        - db_name
+        - db_type
+      properties:
+        namespace:
+          title: Namespace
+          type: string
+          description: namespace we will deploy to within the k8 cluster. Should be first initial + last name like "hsaab"
+        github_repo_name:
+          title: Github Repo Name
+          type: string
+        github_repo_description:
+          title: Github Repo Description
+          type: string
+        github_repo_owner:
+          title: Github Repo Owner
+          type: string
+        harness_project_name:
+          title: Harness Project Name
+          type: string
+        eks_cluster_name:
+          title: EKS Cluster Name
+          type: string
+        db_name:
+          title: Database Name
+          type: string
+        db_type:
+          title: Database Type
+          type: string
+          enum:
+            - rds
+            - aurora
+            - postgres
+          default: rds
+          examples:
+            - rds
+            - aurora
+          description: Type of database to deploy (rds, aurora, or postgres)
+          ui:field: DBTypePicker
+        owner:
+          title: Choose an Owner for the Service
+          type: string
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+        # This field is hidden but needed to authenticate the request to trigger the pipeline
+        token:
+          title: Harness Token
+          type: string
+          ui:widget: password
+          ui:field: HarnessAuthToken
+  steps:
+    - id: trigger
+      name: Bootstrapping your new service
+      action: trigger:harness-custom-pipeline
+      input:
+        url: https://app.harness.io/ng/account/IFG41DWvSnaRLOVNB2uesg/module/cd/orgs/training/projects/Viper/pipelines/three_tier_app_onboarding/pipeline-studio?storeType=INLINE
+        inputset:
+          namespace: ${{ parameters.namespace }}
+          github_repo_name: ${{ parameters.github_repo_name }}
+          github_repo_description: ${{ parameters.github_repo_description }}
+          github_repo_owner: ${{ parameters.github_repo_owner }}
+          harness_project_name: ${{ parameters.harness_project_name }}
+          eks_cluster_name: ${{ parameters.eks_cluster_name }}
+          db_name: ${{ parameters.db_name }}
+        apikey: ${{ parameters.token }}
+
+  output:
+    links:
+      - title: Pipeline Details
+        url: ${{ steps.trigger.output.PipelineUrl }}

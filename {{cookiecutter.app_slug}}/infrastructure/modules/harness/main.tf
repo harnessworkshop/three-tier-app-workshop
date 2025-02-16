@@ -11,13 +11,6 @@ terraform {
   }
 }
 
-locals {
-  # Replace hyphens with underscores for the connector identifier
-  connector_identifier = replace(var.cluster_name, "-", "_")
-  # Replace hyphens with underscores and prepend underscore for delegate name
-  delegate_name = "_${replace(var.delegate_name, "-", "_")}"
-}
-
 module "harness-delegate" {
   source  = "harness/harness-delegate/kubernetes"
   version = "0.2.0"
@@ -57,4 +50,87 @@ resource "harness_platform_connector_kubernetes" "inheritFromDelegate" {
   inherit_from_delegate {
     delegate_selectors = ["${var.delegate_name}"]
   }
+}
+
+resource "harness_platform_pipeline" "pipeline" {
+  identifier = "three_tier_app_blueprint_template"
+  org_id     = "training"
+  project_id = var.harness_project_name
+  name       = "three_tier_app_blueprint_template"
+  yaml = <<-EOT
+    pipeline:
+      name: three_tier_app_blueprint_template
+      identifier: three_tier_app_blueprint_template
+      tags: {}
+      template:
+        templateRef: org.three_tier_app_blueprint_template
+        versionLabel: "1"
+        templateInputs:
+          stages:
+            - stage:
+                identifier: backend_deploy
+                type: Deployment
+                spec:
+                  environment:
+                    infrastructureDefinitions:
+                      - identifier: dev
+                        inputs:
+                          identifier: dev
+                          type: KubernetesDirect
+                          spec:
+                            connectorRef: "org.${var.cluster_name}_connector"
+          properties:
+            ci:
+              codebase:
+                repoName: "${var.github_repo_name}"
+                build:
+                  type: branch
+                  spec:
+                    branch: main
+          variables:
+            - name: namespace
+              type: String
+              value: "${var.namespace}"
+      projectIdentifier: "${var.harness_project_name}"
+      orgIdentifier: training
+  EOT
+}
+
+resource "harness_platform_triggers" "github_trigger" {
+  identifier = "${var.github_repo_name}trigger"
+  org_id     = "training"
+  project_id = var.harness_project_name
+  name       = "${var.github_repo_name}trigger"
+  target_id  = "three_tier_app_blueprint_template"
+  yaml       = <<-EOT
+  trigger:
+    name: "${var.github_repo_name}trigger"
+    identifier: "${var.github_repo_name}trigger"
+    enabled: true
+    description: ""
+    tags: {}
+    projectIdentifier: "${var.harness_project_name}"
+    orgIdentifier: training
+    pipelineIdentifier: "three_tier_app_blueprint_template"
+    source:
+      type: Webhook
+      spec:
+        type: Github
+        spec:
+          type: Push
+          spec:
+            connectorRef: org.harness_workshop
+            autoAbortPreviousExecutions: false
+            payloadConditions:
+            - key: targetBranch
+              operator: Equals
+              value: main
+            headerConditions: []
+            repoName: "${var.github_repo_name}"
+            actions: []
+    inputYaml: |
+      pipeline: {}\n
+    EOT
+
+  depends_on = [harness_platform_pipeline.pipeline]
 }

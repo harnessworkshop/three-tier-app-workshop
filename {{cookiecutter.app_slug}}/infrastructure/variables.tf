@@ -81,3 +81,20 @@ variable "harness_platform_api_key" {
   type        = string
   sensitive   = true
 }
+
+# Harness Project Configuration
+variable "github_repo_name" {
+  description = "Name of the GitHub repository"
+  type        = string
+}
+
+variable "harness_project_name" {
+  description = "Name of the Harness project"
+  type        = string
+}
+
+variable "namespace" {
+  description = "Kubernetes namespace for the application"
+  type        = string
+  default     = "hsaab"
+}
