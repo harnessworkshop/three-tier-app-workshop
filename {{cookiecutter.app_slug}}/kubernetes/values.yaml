@@ -1,7 +1,7 @@
 namespace: <+pipeline.variables.namespace>
 sequenceId: <+pipeline.sequenceId>
-db_port: <+org.variables.shared_db_rds_port>
-db_user: <+org.variables.shared_db_rds_user>
+db_port: <+variable.org.shared_db_rds_port>
+db_user: <+variable.org.shared_db_rds_user>
 db_password: <+secrets.getValue("org.shared_db_rds_password")>
 db_name: <+"${pipeline.variables.namespace}_db_rds_name">
 db_host: <+"${pipeline.variables.namespace}_db_rds_host">
