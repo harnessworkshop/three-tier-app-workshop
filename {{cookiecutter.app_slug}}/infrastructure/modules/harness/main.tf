@@ -90,6 +90,37 @@ resource "harness_platform_pipeline" "pipeline" {
                           type: KubernetesDirect
                           spec:
                             connectorRef: "org.${var.cluster_name}_connector"
+                  deploymentType: Kubernetes
+                  services:
+                    values:
+                      - serviceRef: org.three_tier_app_frontend
+                        serviceInputs:
+                          serviceDefinition:
+                            type: Kubernetes
+                            spec:
+                              manifests:
+                                - manifest:
+                                    identifier: k8_three_tier_app_frontend
+                                    type: K8sManifest
+                                    spec:
+                                      store:
+                                        type: Github
+                                        spec:
+                                          repoName: "${var.github_repo_name}"
+                      - serviceRef: org.three_tier_blueprint_backend
+                        serviceInputs:
+                          serviceDefinition:
+                            type: Kubernetes
+                            spec:
+                              manifests:
+                                - manifest:
+                                    identifier: k8_three_tier_app_backend
+                                    type: K8sManifest
+                                    spec:
+                                      store:
+                                        type: Github
+                                        spec:
+                                          repoName: "${var.github_repo_name}"
           properties:
             ci:
               codebase:
