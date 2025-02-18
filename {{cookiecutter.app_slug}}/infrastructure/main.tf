@@ -53,10 +53,28 @@ module "eks" {
   source = "./modules/eks"
 
   cluster_name = var.cluster_name
-  vpc_id       = module.vpc.vpc_id
-  subnet_ids   = module.vpc.public_subnet_ids
+  # vpc_id       = module.vpc.vpc_id # commented out for now as we've already created the VPC.
+  vpc_id       = "vpc-02578312775ff80dc"
+  # subnet_ids   = module.vpc.public_subnet_ids # commented out for now as we've already created the VPC.
+  subnet_ids   = ["subnet-0f588596c65f1eeb8", "subnet-0c7cd4215e8f8da4a"]
   environment  = var.environment
 }
+
+# Create RDS instance
+module "rds" {
+  source = "./modules/rds"
+
+  identifier        = var.db_name
+  allocated_storage = 20
+  db_name           = var.db_name
+  username          = var.db_username
+  password          = var.db_password
+  # vpc_id       = module.vpc.vpc_id # commented out for now as we've already created the VPC.
+  vpc_id       = "vpc-02578312775ff80dc"
+  # subnet_ids   = module.vpc.public_subnet_ids # commented out for now as we've already created the VPC.
+  subnet_ids   = ["subnet-0f588596c65f1eeb8", "subnet-0c7cd4215e8f8da4a"]
+  environment       = var.environment
+} 
 
 # Create Harness Delegate and K8s Connector
 module "harness" {
@@ -76,18 +94,6 @@ module "harness" {
   github_repo_name     = var.github_repo_name
   harness_project_name = var.harness_project_name
   namespace            = var.namespace
+
+  depends_on = [module.eks, module.rds]
 }
-
-# Create RDS instance
-module "rds" {
-  source = "./modules/rds"
-
-  identifier        = var.db_name
-  allocated_storage = 20
-  db_name           = var.db_name
-  username          = var.db_username
-  password          = var.db_password
-  vpc_id            = module.vpc.vpc_id
-  subnet_ids        = module.vpc.public_subnet_ids
-  environment       = var.environment
-} 
