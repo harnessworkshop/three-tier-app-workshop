@@ -3,7 +3,7 @@
 {{cookiecutter.project_short_description}}
 
 ## Author
-{{cookiecutter.author}}
+{{cookiecutter.namespace}}
 
 ## Description
 {{cookiecutter.project_short_description}}
