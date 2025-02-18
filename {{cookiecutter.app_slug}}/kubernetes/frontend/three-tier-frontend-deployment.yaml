@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: {{.Values.namespace}}-three-tier-frontend
-        image: hsaab/three-tier-app-frontend:{{.Values.namespace}}-{{.Values.executionId}}
+        image: hsaab/three-tier-app-frontend:{{.Values.namespace}}-{{.Values.sequenceId}}
         ports:
         - containerPort: 80
         imagePullPolicy: "Always"
