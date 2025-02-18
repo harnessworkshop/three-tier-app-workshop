@@ -1,7 +1,7 @@
 {
   "app_name": "Full Stack App",
   "app_slug": "{{ cookiecutter.app_name.lower().replace(' ', '_') }}",
-  "author": "Your Name",
+  "author": "{{ cookiecutter.namespace }}",
   "project_name": "Full Stack Demo App",
   "project_short_description": "A full stack demo application with React frontend and Node.js backend",
   "description": "A short description of the app.",
