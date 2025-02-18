@@ -53,3 +53,9 @@ variable "namespace" {
   type        = string
   default     = "hsaab"
 }
+
+variable "cluster_token" {
+  description = "EKS cluster authentication token"
+  type        = string
+  sensitive   = true
+}

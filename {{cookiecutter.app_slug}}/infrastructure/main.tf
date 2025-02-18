@@ -32,12 +32,13 @@ provider "helm" {
   kubernetes {
     host                   = module.eks.cluster_endpoint
     cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-    exec {
-      api_version = "client.authentication.k8s.io/v1beta1"
-      args        = ["eks", "get-token", "--cluster-name", module.eks.cluster_name]
-      command     = "aws"
-    }
+    token                  = data.aws_eks_cluster_auth.cluster.token
   }
+}
+
+# Add this data source
+data "aws_eks_cluster_auth" "cluster" {
+  name = module.eks.cluster_name
 }
 
 # Create VPC
@@ -83,6 +84,7 @@ module "harness" {
   cluster_endpoint = module.eks.cluster_endpoint
   cluster_ca_cert  = module.eks.cluster_certificate_authority_data
   cluster_name     = module.eks.cluster_name
+  cluster_token    = data.aws_eks_cluster_auth.cluster.token
   
   account_id       = var.harness_account_id
   delegate_token   = var.harness_delegate_token
