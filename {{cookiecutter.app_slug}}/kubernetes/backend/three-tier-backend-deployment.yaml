@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: {{.Values.namespace}}-three-tier-backend
-        image: hsaab/three-tier-app-backend:{{.Values.namespace}}:{{.Values.executionId}}
+        image: hsaab/three-tier-app-backend:{{.Values.namespace}}-{{.Values.executionId}}
         ports:
         - containerPort: 5000
         env:
