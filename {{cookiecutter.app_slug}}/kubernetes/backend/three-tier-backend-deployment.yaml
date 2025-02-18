@@ -30,6 +30,19 @@ spec:
           value: "5000"
         - name: NODE_ENV
           value: "production"
+        - name: DB_PORT
+          value: "{{.Values.db_port}}"
+        - name: DB_USER
+          value: "{{.Values.db_user}}"
+        - name: DB_NAME
+          value: "{{.Values.db_name}}"
+        - name: DB_HOST
+          value: "{{.Values.db_host}}"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{.Values.namespace}}-db-credentials
+              key: password
         imagePullPolicy: "Always"
         resources:
           requests:

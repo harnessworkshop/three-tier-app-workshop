@@ -22,6 +22,16 @@ variable "rds_instance_id" {
   type        = string
 }
 
+variable "rds_endpoint" {
+  description = "RDS database endpoint"
+  type        = string
+}
+
+variable "db_name" {
+  description = "RDS database name"
+  type        = string
+}
+
 module "harness-delegate" {
   source  = "harness/harness-delegate/kubernetes"
   version = "0.2.0"
@@ -161,4 +171,26 @@ resource "harness_platform_triggers" "github_trigger" {
     EOT
 
   depends_on = [harness_platform_pipeline.pipeline]
+}
+
+resource "harness_platform_variables" "db_host" {
+  identifier = "${var.namespace}_db_rds_host"
+  name       = "${var.namespace}_db_rds_host"
+  org_id     = "training"
+  type       = "String"
+  spec {
+    value_type  = "FIXED"
+    fixed_value = var.rds_endpoint
+  }
+}
+
+resource "harness_platform_variables" "db_name" {
+  identifier = "${var.namespace}_db_rds_name"
+  name       = "${var.namespace}_db_rds_name"
+  org_id     = "training"
+  type       = "String"
+  spec {
+    value_type  = "FIXED"
+    fixed_value = var.db_name
+  }
 }

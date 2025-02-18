@@ -92,6 +92,9 @@ module "harness" {
   manager_endpoint = "https://app.harness.io/gratis"
   delegate_image   = "harness/delegate:25.01.85000"
 
+  rds_endpoint = module.rds.db_instance_endpoint
+  db_name      = module.rds.db_name
+
   # Add new variables
   github_repo_name     = var.github_repo_name
   harness_project_name = var.harness_project_name
