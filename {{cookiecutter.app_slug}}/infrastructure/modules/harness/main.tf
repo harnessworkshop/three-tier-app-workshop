@@ -11,6 +11,17 @@ terraform {
   }
 }
 
+# Add these input variables to track dependencies
+variable "eks_cluster_id" {
+  description = "EKS cluster ID to track dependency"
+  type        = string
+}
+
+variable "rds_instance_id" {
+  description = "RDS instance ID to track dependency"
+  type        = string
+}
+
 module "harness-delegate" {
   source  = "harness/harness-delegate/kubernetes"
   version = "0.2.0"
@@ -28,6 +39,8 @@ module "harness-delegate" {
   values = yamlencode({
     initScript: ""
   })
+
+  depends_on = [var.eks_cluster_id]
 }
 
 provider "helm" {
@@ -50,6 +63,8 @@ resource "harness_platform_connector_kubernetes" "inheritFromDelegate" {
   inherit_from_delegate {
     delegate_selectors = ["${var.delegate_name}"]
   }
+
+  depends_on = [module.harness-delegate, var.rds_instance_id]
 }
 
 resource "harness_platform_pipeline" "pipeline" {

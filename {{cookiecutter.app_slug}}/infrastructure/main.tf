@@ -67,8 +67,8 @@ module "rds" {
   identifier        = var.db_name
   allocated_storage = 20
   db_name           = var.db_name
-  username          = var.db_username
   password          = var.db_password
+  username          = var.db_username
   # vpc_id       = module.vpc.vpc_id # commented out for now as we've already created the VPC.
   vpc_id       = "vpc-02578312775ff80dc"
   # subnet_ids   = module.vpc.public_subnet_ids # commented out for now as we've already created the VPC.
@@ -95,5 +95,7 @@ module "harness" {
   harness_project_name = var.harness_project_name
   namespace            = var.namespace
 
-  depends_on = [module.eks, module.rds]
+  # Pass dependency IDs
+  eks_cluster_id = module.eks.cluster_id
+  rds_instance_id = module.rds.db_instance_id
 }
