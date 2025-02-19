@@ -39,10 +39,7 @@ spec:
         - name: DB_HOST
           value: "{{.Values.db_host}}"
         - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{.Values.namespace}}-db-credentials
-              key: password
+          value: "{{.Values.db_password}}"
         imagePullPolicy: "Always"
         resources:
           requests:
