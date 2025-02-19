@@ -22,14 +22,14 @@ spec:
     spec:
       containers:
       - name: {{.Values.namespace}}-three-tier-frontend
-        image: hsaab/three-tier-app-frontend:{{.Values.namespace}}-{{.Values.sequenceId}}
+        image: hsaab/three-tier-app-frontend:{{.Values.namespace}}-{{.Values.resumedExecutionId}}
         ports:
         - containerPort: 80
         imagePullPolicy: "Always"
         resources:
           requests:
-            cpu: "200m"
+            cpu: "100m"
             memory: "256Mi"
           limits:
-            cpu: "500m"
+            cpu: "200m"
             memory: "512Mi"

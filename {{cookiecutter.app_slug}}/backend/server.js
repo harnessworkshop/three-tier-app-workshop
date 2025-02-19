@@ -36,7 +36,7 @@ app.use(cors({
 
 // Add a middleware to ensure CORS headers are always set
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', req.headers.origin || 'http://localhost:3000');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Credentials', 'true');
     next();
 });
