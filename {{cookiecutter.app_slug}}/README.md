@@ -1,12 +1,12 @@
 # {{cookiecutter.app_name}}
 
-{{cookiecutter.project_short_description}}
+{{cookiecutter.description}}
 
 ## Author
 {{cookiecutter.namespace}}
 
 ## Description
-{{cookiecutter.project_short_description}}
+{{cookiecutter.description}}
 
 This is the application documentation template we automatically provision in every repo to make it easier for developers to understand what should be documented for their service.
 

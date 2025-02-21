@@ -3,8 +3,7 @@
   "app_slug": "{{ cookiecutter.app_name.lower().replace(' ', '_') }}",
   "namespace": "{{ cookiecutter.namespace }}",
   "project_name": "Full Stack Demo App",
-  "project_short_description": "{{ cookiecutter.description }}",
-  "description": "A short description of the app.",
+  "description": "{{ cookiecutter.description }}",
   "_copy_without_render": [
     "*.html",
     "*.js",
