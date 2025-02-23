@@ -87,7 +87,7 @@ spec:
           enum:
             - rds
             - aurora
-            - postgres
+            - dynamoDb
           default: rds
         owner:
           title: Choose an Owner for the Service
