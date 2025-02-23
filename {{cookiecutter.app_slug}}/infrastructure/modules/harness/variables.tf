@@ -59,3 +59,23 @@ variable "cluster_token" {
   type        = string
   sensitive   = true
 }
+
+variable "eks_cluster_id" {
+  description = "EKS cluster ID to track dependency"
+  type        = string
+}
+
+variable "rds_instance_id" {
+  description = "RDS instance ID to track dependency"
+  type        = string
+}
+
+variable "rds_endpoint" {
+  description = "RDS database endpoint"
+  type        = string
+}
+
+variable "db_name" {
+  description = "RDS database name"
+  type        = string
+}
