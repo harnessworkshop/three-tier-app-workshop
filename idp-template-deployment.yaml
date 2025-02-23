@@ -29,38 +29,66 @@ spec:
         namespace:
           title: Namespace
           type: string
-          description: namespace we will deploy to within the k8 cluster. Should be first initial + last name like "hsaab"
+          description: Should be first initial + last name like "hsaab"
+          pattern: "^[a-z]+$"
+          maxLength: 10
+          ui:autofocus: true
+          ui:help: "Hint: Lowercase letters only"
         github_repo_name:
           title: Github Repo Name
           type: string
+          description: Name of the github repo to deploy
+          pattern: "^[a-z]+(?:[_][a-z]+)*$"
+          maxLength: 8
+          ui:autofocus: true
+          ui:help: "Hint: Words and underscores only"
         github_repo_description:
           title: Github Repo Description
           type: string
+          description: Description of the github repo
+          maxLength: 100
+          ui:autofocus: true
         github_repo_owner:
           title: Github Repo Owner
           type: string
+          description: Email of the github repo owner
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          maxLength: 30
+          ui:autofocus: true
+          ui:help: "Hint: Emails only"
         harness_project_name:
           title: Harness Project Name
           type: string
+          description: Name of the new harness project
+          pattern: "^[a-z]+(?:[_][a-z]+)*$"
+          maxLength: 12
+          ui:autofocus: true
+          ui:help: "Hint: Words and underscores only"
         eks_cluster_name:
           title: EKS Cluster Name
           type: string
+          description: Name of the new EKS cluster to deploy
+          pattern: "^[a-z]+(?:[_][a-z]+)*$"
+          maxLength: 12
+          ui:autofocus: true
+          ui:help: "Hint: Words and underscores only"
         db_name:
           title: Database Name
           type: string
+          description: Name of the new database to deploy
+          pattern: "^[a-z]+(?:[_][a-z]+)*$"
+          maxLength: 12
+          ui:autofocus: true
+          ui:help: "Hint: Words and underscores only"
         db_type:
           title: Database Type
           type: string
+          description: Name of the new database to deploy
           enum:
             - rds
             - aurora
             - postgres
           default: rds
-          examples:
-            - rds
-            - aurora
-          description: Type of database to deploy (rds, aurora, or postgres)
-          ui:field: DBTypePicker
         owner:
           title: Choose an Owner for the Service
           type: string
