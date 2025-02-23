@@ -1,23 +1,22 @@
 apiVersion: scaffolder.backstage.io/v1beta3
-kind: Template
+kind: <KIND>
 metadata:
-  name: Three_Tier_Web_App_Blueprint
-  title: Three Tier Web App Blueprint
-  description: A blueprint that deploys a frontend, backend, and database to a kubernetes cluster in eks
+  name: <YOUR_NAMESPACE>_Three_Tier_Web_App_Blueprint
+  title: <YOUR_NAMESPACE> Three Tier Web App Blueprint
+  description: <DESCRIPTION>
   tags:
     - react
-    - javascript
-    - eks
-    - kubernetes
-    - rds
-    - database
+    - node.js
+    - <ADD TAG>
+    - <ADD TAG>
+    - <ADD TAG>
 spec:
-  owner: hassan.saab@harness.io
+  owner: <ADD_OWNER
   type: service
   parameters:
     - title: Service Details
       required:
-        - namespace
+        - <ADD_NAMESPACE_PROPERTY_HERE>
         - github_repo_name
         - github_repo_description
         - github_repo_owner
@@ -26,14 +25,7 @@ spec:
         - db_name
         - db_type
       properties:
-        namespace:
-          title: Namespace
-          type: string
-          description: Should be first initial + last name like "hsaab"
-          pattern: "^[a-z]+$"
-          maxLength: 10
-          ui:autofocus: true
-          ui:help: "Hint: Lowercase letters only"
+        namespace: <ADD_NAMESPACE_PROPERTY_HERE>
         github_repo_name:
           title: Github Repo Name
           type: string
@@ -96,7 +88,6 @@ spec:
           ui:options:
             allowedKinds:
               - Group
-        # This field is hidden but needed to authenticate the request to trigger the pipeline
         token:
           title: Harness Token
           type: string
@@ -109,7 +100,7 @@ spec:
       input:
         url: https://app.harness.io/ng/account/IFG41DWvSnaRLOVNB2uesg/module/cd/orgs/training/projects/Viper/pipelines/three_tier_app_onboarding/pipeline-studio?storeType=INLINE
         inputset:
-          namespace: ${{ parameters.namespace }}
+          namespace: <ADD_PARAMETER>
           github_repo_name: ${{ parameters.github_repo_name }}
           github_repo_description: ${{ parameters.github_repo_description }}
           github_repo_owner: ${{ parameters.github_repo_owner }}
