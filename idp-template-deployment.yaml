@@ -52,7 +52,7 @@ spec:
           title: Github Repo Owner
           type: string
           description: Email of the github repo owner
-          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
           maxLength: 30
           ui:autofocus: true
           ui:help: "Hint: Emails only"
