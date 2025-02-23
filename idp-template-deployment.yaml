@@ -31,7 +31,7 @@ spec:
           type: string
           description: Name of the github repo to deploy
           pattern: "^[a-z]+(?:[_][a-z]+)*$"
-          maxLength: 8
+          maxLength: 20
           ui:autofocus: true
           ui:help: "Hint: Words and underscores only"
         github_repo_description:
@@ -53,7 +53,7 @@ spec:
           type: string
           description: Name of the new harness project
           pattern: "^[a-z]+(?:[_][a-z]+)*$"
-          maxLength: 12
+          maxLength: 20
           ui:autofocus: true
           ui:help: "Hint: Words and underscores only"
         eks_cluster_name:
@@ -61,7 +61,7 @@ spec:
           type: string
           description: Name of the new EKS cluster to deploy
           pattern: "^[a-z]+(?:[_][a-z]+)*$"
-          maxLength: 12
+          maxLength: 20
           ui:autofocus: true
           ui:help: "Hint: Words and underscores only"
         db_name:
@@ -69,7 +69,7 @@ spec:
           type: string
           description: Name of the new database to deploy
           pattern: "^[a-z]+(?:[_][a-z]+)*$"
-          maxLength: 12
+          maxLength: 20
           ui:autofocus: true
           ui:help: "Hint: Words and underscores only"
         db_type:
