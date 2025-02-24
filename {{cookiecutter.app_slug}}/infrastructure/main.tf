@@ -88,7 +88,7 @@ module "harness" {
   
   account_id       = var.harness_account_id
   delegate_token   = var.harness_delegate_token
-  delegate_name    = "${var.cluster_name}delegate"
+  delegate_name    = lower(replace(replace("${var.cluster_name}delegate", "-", ""), "_", ""))
   manager_endpoint = "https://app.harness.io/gratis"
   delegate_image   = "harness/delegate:25.01.85000"
 
