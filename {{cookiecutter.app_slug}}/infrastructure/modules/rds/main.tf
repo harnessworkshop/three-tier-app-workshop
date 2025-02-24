@@ -28,7 +28,7 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_instance" "main" {
-  identifier           = var.identifier
+  identifier           = lower(replace(replace(var.identifier, "-", ""), "_", ""))
   allocated_storage    = var.allocated_storage
   storage_type        = "gp2"
   engine              = "postgres"
