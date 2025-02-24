@@ -11,7 +11,7 @@ metadata:
     - <ADD TAG>
     - <ADD TAG>
 spec:
-  owner: <ADD_OWNER
+  owner: <ADD_OWNER>
   type: service
   parameters:
     - title: Service Details
