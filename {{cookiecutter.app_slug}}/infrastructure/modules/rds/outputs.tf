@@ -1,5 +1,6 @@
 output "db_instance_endpoint" {
-  value = aws_db_instance.main.endpoint
+  description = "The database instance endpoint without port"
+  value       = aws_db_instance.database.address
 }
 
 output "db_instance_id" {
