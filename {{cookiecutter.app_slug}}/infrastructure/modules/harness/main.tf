@@ -11,18 +11,16 @@ terraform {
   }
 }
 
-resource "null_resource" "wait_for_cluster" {
-  depends_on = [module.eks]
-
-  provisioner "local-exec" {
-    command = <<-EOT
-      until kubectl get nodes; do
-        echo "Waiting for EKS cluster to be ready..."
-        sleep 10
-      done
-    EOT
-  }
-}
+# resource "null_resource" "wait_for_cluster" {
+#   provisioner "local-exec" {
+#     command = <<-EOT
+#       until kubectl get nodes; do
+#         echo "Waiting for EKS cluster to be ready..."
+#         sleep 10
+#       done
+#     EOT
+#   }
+# }
 
 module "harness-delegate" {
   source  = "harness/harness-delegate/kubernetes"
@@ -42,7 +40,7 @@ module "harness-delegate" {
     initScript: ""
   })
 
-    depends_on = [module.eks, null_resource.wait_for_cluster]
+  depends_on = [var.eks_cluster_id]
 }
 
 provider "helm" {
