@@ -164,8 +164,8 @@ resource "harness_platform_triggers" "github_trigger" {
 }
 
 resource "harness_platform_variables" "db_host" {
-  identifier = "${var.namespace}_db_rds_host"
-  name       = "${var.namespace}_db_rds_host"
+  identifier = "${var.namespace}_db_rds_host_${substr(uuid(), 0, 8)}"
+  name       = "${var.namespace}_db_rds_host_${substr(uuid(), 0, 8)}"
   org_id     = "training"
   type       = "String"
   spec {
@@ -175,8 +175,8 @@ resource "harness_platform_variables" "db_host" {
 }
 
 resource "harness_platform_variables" "db_name" {
-  identifier = "${var.namespace}_db_rds_name"
-  name       = "${var.namespace}_db_rds_name"
+  identifier = "${var.namespace}_db_rds_name_${substr(uuid(), 0, 8)}"
+  name       = "${var.namespace}_db_rds_name_${substr(uuid(), 0, 8)}"
   org_id     = "training"
   type       = "String"
   spec {
